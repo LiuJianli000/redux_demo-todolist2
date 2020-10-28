@@ -1,4 +1,4 @@
-import { ADD_ITEM, CHANGE_INPUT } from "./actionTypes"
+import { ADD_ITEM, CHANGE_INPUT, DELE_ITEM, GET_LIST } from "./actionTypes"
 
 const defaultValue = {
   inputValue: 'Write something...',
@@ -27,6 +27,22 @@ export default (state = defaultValue, action) => {
         ...state,
         list: newState.list,
         inputValue: ''
+      }
+    }
+    case DELE_ITEM: {
+      const newState = {...state}
+
+      newState.list.splice(action.index, 1)
+
+      return {
+        ...state,
+        list: newState.list
+      }
+    }
+    case GET_LIST: {
+      return {
+        ...state,
+        list: action.list.data.list
       }
     }
     default:

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Input, List } from 'antd';
 import { connect } from 'react-redux'
-import { ADD_ITEM, CHANGE_INPUT } from '../store/actionTypes';
+import { ADD_ITEM, CHANGE_INPUT, DELE_ITEM, GET_MY_LIST } from '../store/actionTypes';
 
 class TodoList extends Component {
   constructor(props) {
@@ -9,8 +9,12 @@ class TodoList extends Component {
     this.state = {}
   }
 
+  componentDidMount() {
+    this.props.getMyList()
+  }
+
   render() {
-    const { inputValue, list, inputChange, addItem } = this.props
+    const { inputValue, list, inputChange, addItem, deleItem } = this.props
     
     return ( 
       <div style={{ margin: 10 }}>
@@ -35,7 +39,7 @@ class TodoList extends Component {
           dataSource={list}
           renderItem={(item, index) => 
             <List.Item 
-              // onClick={() => handleDele(index)}
+              onClick={() => deleItem(index)}
             >
               {item}
             </List.Item>
@@ -65,6 +69,17 @@ const dispatchToProps = dispatch => {
     addItem: () => {
       dispatch({
         type: ADD_ITEM
+      })
+    },
+    deleItem: index => {
+      dispatch({
+        type: DELE_ITEM,
+        index
+      })
+    },
+    getMyList: () => {
+      dispatch({
+        type: GET_MY_LIST
       })
     }
   }
